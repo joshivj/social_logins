@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block metatags %}
+<meta name="google-signin-client_id" content="884782048750-pi2rhriou7hscqe5itg28kqn73l9gjkr.apps.googleusercontent.com">
+{% endblock metatags %}
+
+{% block title %}
+  SOCIAL
+{% endblock title %}
+
+{% block extra_css %}
+  <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block content %}
+  <div class="wrapper">
+    <div class="form-signin">
+      <h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
+      <hr class="colorgraph">
+      <br>
+
+      <div class="form-group">
+        <button id="btn-fb" type="submit" onclick="FBlogin()" class="btn btn-fb btn-lg btn-block"><i
+            class="fa fa-facebook"></i>&nbsp; Login
+          with Facebook
+        </button>
+
+      </div>
+      <div class="form-group">
+        <div id="google-signup2" data-width="338" data-height="45"></div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block extra_js %}
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+  <script type="text/javascript" src="{% static 'js/social_login.js' %}"></script>
+{% endblock extra_js %}
