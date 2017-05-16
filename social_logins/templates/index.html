@@ -15,12 +15,25 @@
 
 {% block content %}
   <div class="wrapper">
+    <div class="page-loader-container" id="page_loading" style="display: none">
+        <div class="page-backdrop"></div>
+        <div class="page-loader">
+            <i class="fa fa-spin fa-cog fa-3x" aria-hidden="true"></i><span class="h3">Loading</span>
+        </div>
+    </div>
     <div class="form-signin">
-      <h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
-      <hr class="colorgraph">
-      <br>
-
-      <div class="form-group">
+      {% if request.user.is_authenticated %}
+        <h3 class="form-signin-heading">Hey {{ request.user.get_full_name }}, Please logout.</h3>
+        <hr class="colorgraph">
+        <br>
+        <a class="btn btn-primary btn-lg pull-right" href="{% url 'logout' %}">
+          Logout
+        </a>
+      {% else %}
+        <h3 class="form-signin-heading">Welcome! Please Sign In</h3>
+        <hr class="colorgraph">
+        <br>
+        <div class="form-group">
         <button id="btn-fb" type="submit" onclick="FBlogin()" class="btn btn-fb btn-lg btn-block"><i
             class="fa fa-facebook"></i>&nbsp; Login
           with Facebook
@@ -30,6 +43,9 @@
       <div class="form-group">
         <div id="google-signup2" data-width="338" data-height="45"></div>
       </div>
+      {% endif %}
+
+
     </div>
   </div>
 {% endblock content %}

@@ -6,22 +6,23 @@ function onSignIn(googleUser) {
         'profile_picture': profile.getImageUrl(),
         'name': profile.getName()
     };
+    $('#page_loading').show();
     $.ajax({
         type: "POST",
-        url: '/api/v1/sociallogin/',
+        url: 'v1/sociallogin/',
         data: post_data,
         success: function () {
             // user is logged into django, now logout the google instance
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 console.log('User signed out.');
+                $('#page_loading').hide();
                 window.location.href = '/';
             });
 
         },
-        //dataType: 'json'
     });
-    console.log('Successful login for: ' + profile.getName());
+    console.log(profile.getName() + ' just logged in.');
 }
 function onSuccess(googleUser) {
     console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
@@ -88,22 +89,6 @@ window.fbAsyncInit = function () {
         version: 'v2.8' // use graph api version 2.8
     });
 
-    // Now that we've initialized the JavaScript SDK, we call
-    // FB.getLoginStatus().  This function gets the state of the
-    // person visiting this page and can return one of three states to
-    // the callback you provide.  They can be:
-    //
-    // 1. Logged into your app ('connected')
-    // 2. Logged into Facebook, but not your app ('not_authorized')
-    // 3. Not logged into Facebook and can't tell if they are logged into
-    //    your app or not.
-    //
-    // These three cases are handled in the callback function.
-
-    //FB.getLoginStatus(function (response) {
-    //statusChangeCallback(response);
-    //});
-
 };
 
 // Load the SDK asynchronously
@@ -119,28 +104,23 @@ window.fbAsyncInit = function () {
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
     FB.api('/me?scope=email', 'GET', {fields: 'first_name,last_name,name,email,picture,id'}, function (response) {
+        $('#page_loading').show();
         $.ajax({
             type: "POST",
-            url: '/api/v1/sociallogin/',
+            url: 'v1/sociallogin/',
             data: response,
             success: function () {
-                // user is logged into django
+                $('#page_loading').hide();
                 window.location.href = '/';
             },
-            //dataType: 'json'
         });
-        console.log('Successful login for: ' + response.name);
-        console.log(
-            'Thanks for logging in, ' + response.name + '!');
+        console.log(response.name + ' just logged in.');
     });
 }
 
 function FBlogin() {
     FB.login(function (response) {
-        console.log('statusChangeCallback');
-        console.log(response);
         // The response object is returned with a status field that lets the
         // app know the current login status of the person.
         // Full docs on the response object can be found in the documentation

@@ -50,3 +50,17 @@ input[type="password"] {
     background-color: #3097F7;
     color: white;
 }
+
+/*loader icon*/
+.page-loading {
+    overflow: hidden;
+}
+.page-backdrop {
+    position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1030;background-color: #000;-webkit-transition: opacity .15s linear;transition: opacity .15s linear;opacity: .5;filter: alpha(opacity=50);
+}
+.page-loader{
+    z-index: 1080;width: 156px;height: 44px;position: fixed;top:0;bottom: 0;left: 0;right: 0;margin: auto;color: #ffffff;
+}
+.page-loader i{
+	margin: 0 10px;vertical-align: sub;
+}
